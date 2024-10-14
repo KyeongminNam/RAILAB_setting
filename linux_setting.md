@@ -1,8 +1,20 @@
+### Basics
+- Korean: https://freeablelab.tistory.com/138  
+- vscode: download deb file in https://code.visualstudio.com/    
+`sudo apt install ./code~~~`
+- raisim: https://www.youtube.com/watch?v=oQjHMyDiay4&t=192s  
+- clion 21.3.4: https://www.jetbrains.com/clion/download/other.html, download tar.gz
+```
+sudo tar xvzf CLion-*.tar.gz -C /opt/
+sh /opt/clion-*/bin/clion.sh
+```
+clion -> Tools -> Create Desktop Entry  
+cmake options: -DCMAKE_PREFIX_PATH=/home/nkm/raisim_ws/raisimLib/raisim/linux
 
-### graphic driver install
+### Graphic driver install
 https://donghyun99.tistory.com/18
 
-### cuda 11.8, cudnn 8.7.0 on Ubuntu 20.04
+### Cuda 11.8, Cudnn 8.7.0 on Ubuntu 20.04
 https://velog.io/@qaszx1004/Install-CUDA11.8-CUDNN-on-Ubuntu-20.04
 ```
 # write in ~/.bashrc and source
@@ -35,18 +47,28 @@ sudo ln -sf libcudnn_ops_train.so.8.7.0 libcudnn_ops_train.so.8
 sudo ln -sf libcudnn_ops_train.so.8 libcudnn_ops_train.so
 ```
 
-
+check
 ```
 nvidia-smi
 nvcc -V
 cat /usr/local/cuda/include/cudnn_version.h | grep CUDNN_MAJOR -A 2
 ```
 
-### anaconda install  
+### anaconda install (x. go miniconda)  
 https://record-everything.tistory.com/entry/Ubuntu-2004-%EC%9A%B0%EB%B6%84%ED%88%AC%EC%97%90-%EC%95%84%EB%82%98%EC%BD%98%EB%8B%A4-%EC%84%A4%EC%B9%98-%EB%B0%8F-Python-%EA%B0%80%EC%83%81%ED%99%98%EA%B2%BD-%EC%84%A4%EC%A0%95
 
 ### miniconda install
-https://docs.anaconda.com/free/miniconda/
+https://docs.anaconda.com/free/miniconda/  
+`sh Miniconda~~.sh`
+```
+./miniconda3/bin/conda init
+source ~/.bashrc
+
+conda config --set auto_activate_base false
+conda create -n raisim python=3.9
+conda activate raisim
+```
+
 
 ### other dependency  
 ```
@@ -57,9 +79,27 @@ sudo apt install git-all
 sudo apt-get install htop
 sudo apt-get install gpustat
 sudo apt-get install imagemagick
+sudo apt-get install vim
+sudo apt-get install python3-distutils
 
+
+#conda raisim env setup
 pip install "ruamel.yaml<0.18.0"
+
+pip install --upgrade pip
+pip install tensorflow
+
 ```
+pytorch: https://pytorch.org/get-started/locally/  
+`python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"`
 
 ### memory check
 buffer cache delete : `sudo echo 3 > sudo /proc/sys/vm/drop_caches`
+
+### wandb
+make account : https://wandb.ai/site
+```
+pip install wandb
+wandb login
+# put key : https://wandb.ai/authorize
+```
