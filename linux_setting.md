@@ -2,7 +2,8 @@
 - Korean: https://freeablelab.tistory.com/138  
 - vscode: download deb file in https://code.visualstudio.com/    
 `sudo apt install ./code~~~`
-- raisim: https://www.youtube.com/watch?v=oQjHMyDiay4&t=192s  
+- raisim: https://www.youtube.com/watch?v=oQjHMyDiay4&t=192s
+`export raisim_DIR=/home/nkm/raisim_ws/raisimLib/raisim/linux`  
 - clion 21.3.4: https://www.jetbrains.com/clion/download/other.html, download tar.gz
 ```
 sudo tar xvzf CLion-*.tar.gz -C /opt/
