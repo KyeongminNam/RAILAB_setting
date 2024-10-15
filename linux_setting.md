@@ -2,8 +2,17 @@
 - Korean: https://freeablelab.tistory.com/138  
 - vscode: download deb file in https://code.visualstudio.com/    
 `sudo apt install ./code~~~`
-- raisim: https://www.youtube.com/watch?v=oQjHMyDiay4&t=192s
+- raisim: https://www.youtube.com/watch?v=oQjHMyDiay4&t=192s  
 `export raisim_DIR=/home/nkm/raisim_ws/raisimLib/raisim/linux`  
+`alias ru="cd /home/nkm/raisim_ws/raisimLib/raisimUnity/linux && ./raisimUnity.x86_64"`
+```
+mkdir build
+cd build
+cmake .. -DCMAKE_BUILD_TYPE=RELEASE
+make -j32
+
+chmod +x ./raisimUnity.x86_64
+```
 - clion 21.3.4: https://www.jetbrains.com/clion/download/other.html, download tar.gz
 ```
 sudo tar xvzf CLion-*.tar.gz -C /opt/
@@ -15,7 +24,7 @@ cmake options: -DCMAKE_PREFIX_PATH=/home/nkm/raisim_ws/raisimLib/raisim/linux
 ### Graphic driver install
 https://donghyun99.tistory.com/18
 
-### Cuda 11.8, Cudnn 8.7.0 on Ubuntu 20.04
+### Cuda 11.7.1, Cudnn 8.9.7 on Ubuntu 20.04
 https://velog.io/@qaszx1004/Install-CUDA11.8-CUDNN-on-Ubuntu-20.04
 ```
 # write in ~/.bashrc and source
@@ -25,29 +34,10 @@ export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
 
 Cuda : https://developer.nvidia.com/cuda-toolkit-archive  
 Cudnn: https://developer.nvidia.com/rdp/cudnn-archive
+
 ```
-sudo ln -sf libcudnn.so.8.7.0 libcudnn.so.8
-sudo ln -sf libcudnn.so.8 libcudnn.so
+cd /usr/local/cuda-11.7/lib64
 
-sudo ln -sf libcudnn_adv_infer.so.8.7.0 libcudnn_adv_infer.so.8
-sudo ln -sf libcudnn_adv_infer.so.8 libcudnn_adv_infer.so
-
-sudo ln -sf libcudnn_adv_train.so.8.7.0 libcudnn_adv_train.so.8
-sudo ln -sf libcudnn_adv_train.so.8 libcudnn_adv_train.so
-
-sudo ln -sf libcudnn_cnn_infer.so.8.7.0 libcudnn_cnn_infer.so.8
-sudo ln -sf libcudnn_cnn_infer.so.8 libcudnn_cnn_infer.so
-
-sudo ln -sf libcudnn_cnn_train.so.8.7.0 libcudnn_cnn_train.so.8
-sudo ln -sf libcudnn_cnn_train.so.8 libcudnn_cnn_train.so
-
-sudo ln -sf libcudnn_ops_infer.so.8.7.0 libcudnn_ops_infer.so.8
-sudo ln -sf libcudnn_ops_infer.so.8 libcudnn_ops_infer.so
-
-sudo ln -sf libcudnn_ops_train.so.8.7.0 libcudnn_ops_train.so.8
-sudo ln -sf libcudnn_ops_train.so.8 libcudnn_ops_train.so
-```
-```
 sudo ln -sf libcudnn.so.8.9.7 libcudnn.so.8
 sudo ln -sf libcudnn.so.8 libcudnn.so
 
@@ -95,10 +85,15 @@ conda activate raisim
 
 ### other dependency  
 ```
-sudo apt install git cmake minizip ffmpeg
+sudo apt install git-all
+git config --global user.email twinhk@kaist.ac.kr
+git config --global user.name KyeongminNam
+
+sudo apt install cmake minizip ffmpeg libeigen3-dev
+sudo apt-get install python3-distutils
+
 sudo apt-get install tmux
 sudo apt-get install terminator
-sudo apt install git-all
 sudo apt-get install htop
 sudo apt-get install gpustat
 sudo apt-get install imagemagick
@@ -107,10 +102,12 @@ sudo apt-get install python3-distutils
 
 
 #conda raisim env setup
+# python 3.9.19, torch 2.0.1, tensorboard 2.17.0, numpy 1.19.5
+conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.7 -c pytorch -c nvidia
+pip install numpy==1.19.5 tensorboard==2.17.0
+
 pip install "ruamel.yaml<0.18.0"
 
-pip install --upgrade pip
-pip install tensorflow
 
 ```
 pytorch: https://pytorch.org/get-started/locally/  
