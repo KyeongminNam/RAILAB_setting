@@ -84,6 +84,7 @@ conda activate raisim
 
 
 ### other dependency  
+raisimGymForSegway: python 3.9.19, torch 2.0.1, tensorboard 2.18.0, numpy 1.26.4, numba 0.60.0
 ```
 sudo apt install git-all
 git config --global user.email twinhk@kaist.ac.kr
@@ -102,9 +103,9 @@ sudo apt-get install python3-distutils
 
 
 #conda raisim env setup
-# python 3.9.19, torch 2.0.1, tensorboard 2.17.0, numpy 1.19.5
 conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.7 -c pytorch -c nvidia
-pip install numpy==1.19.5 tensorboard==2.17.0
+
+pip install numpy==1.26.4 tensorboard==2.18.0
 
 pip install "ruamel.yaml<0.18.0"
 

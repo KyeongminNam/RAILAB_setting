@@ -25,8 +25,8 @@ sudo systemctl enable ssh
 ## step 1: Install CTI-L4T & BSP
 Follow: https://connecttech.com/resource-center/kdb373/
 - desktop 20.04, jetpack 5.1.3
-- Target Components -> only Jetson Linux.
-- Pop up (SDK Manager is about to flash..., sdk manager is about to install sdk components... ) -> skip
+- Target Components -> uncheck "Jetson SDK components".
+- 2 Pop ups (SDK Manager is about to flash..., sdk manager is about to install sdk components... ) -> skip
 - Install finish
 
 #### BSP (Board Support Package)
@@ -51,11 +51,11 @@ CTI-L4T-ORIN-AGX-35.5.0-V002 Installed!
 - and if you run `lsusb` in folder `Linux_for_Tegra`, you can see  
 ```
 ...
-Bus 001 Device 016: ID 0955:7223 NVIDIA Corp. APX
+Bus 001 Device 016: ID 0955:7223 NVIDIA Corp.
 ...
 
 ```
-- run `sudo ./cti-flash.sh` select `rogue-orin` - `base` - `a`
+- run `sudo ./cti-flash.sh` select `rogue-orin` - `base` - `orin-agx`
 - takes very long time. If done, you can see
 ```
 *** The target t186ref has been flashed successfully. ***
@@ -71,9 +71,9 @@ Next, see the jetson screen. Install the SW (Similar to Ubuntu install)
 ----
 ## step 2: Jetpack SDK Components
 Follow : https://connecttech.com/resource-center/kdb374/
-- Target Components: except Jetson OS
+- `sdkmanager` -> Target Components: except Jetson Linux
 - Pop-up -> enter the username/password created in jetson
-- It takes a very long time to install
+- It takes very long time to install
 - 
 You must see INSTALLATION COMPLETED SUCCESSFULLY
 
