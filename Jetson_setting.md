@@ -1,5 +1,5 @@
 # Jetson Setting Manual
-Last Updated : 2024.08.05
+Last Updated : 2025.02.05
 
 ----
 ## step 0: Install sdkmanager to desktop
@@ -22,7 +22,7 @@ sudo systemctl enable ssh
 ```
 
 ----
-## step 1: Install CTI-L4T & BSP
+## Step 1: Install CTI-L4T & BSP
 Follow: https://connecttech.com/resource-center/kdb373/
 - desktop 20.04, jetpack 5.1.3
 - Target Components -> uncheck "Jetson SDK components".
@@ -69,7 +69,7 @@ Next, see the jetson screen. Install the SW (Similar to Ubuntu install)
 - remember username and password!
 
 ----
-## step 2: Jetpack SDK Components
+## Step 2: Jetpack SDK Components
 Follow : https://connecttech.com/resource-center/kdb374/
 - `sdkmanager` -> Target Components: except Jetson Linux
 - Pop-up -> enter the username/password created in jetson
@@ -78,3 +78,8 @@ Follow : https://connecttech.com/resource-center/kdb374/
 You must see INSTALLATION COMPLETED SUCCESSFULLY
 
 ----
+
+## Step 3: Mount SSD
+
+Follow: https://semotube.tistory.com/m/98
+

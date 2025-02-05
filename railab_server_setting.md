@@ -56,6 +56,7 @@ exit
 ```
 # at local, go to server
 nkm@nkm-com2:~$ ssh nkm@143.248.6.83
+nkm@nkm-com2:~$ ssh -L 4444:localhost:4444 nkm@143.248.6.105
 
 #then,nkm@user-TRX40-DESIGNARE:~$ 
 
@@ -66,16 +67,30 @@ nkm@user-TRX40-DESIGNARE:~$ docker attach nkm
 # then, root@4442112939a3:/# 
 ```
 
+- Some common commands
+```
+python setup.py develop --CMAKE_PREFIX_PATH ../raisimLib/raisim/linux
+
+
+git checkout -- .
+
+```
+
 ## 1. How to transer file btw docker & local
 
 - from docker to server  
-nkm@user-TRX40-DESIGNARE:~$ `docker cp nkm:/root/aaa .`
+nkm@user-TRX40-DESIGNARE:~$ `docker cp nkm:/root/aaa .`  
+`docker cp nkm:/root/../raisim_ws/raisimGymForSegway/raisimGymForSegway/data/ .`
+
 
 - from server to docker  
 nkm@user-TRX40-DESIGNARE:~$ `docker cp aaa nkm:/root`  
 
 - from server to local  
-nkm@nkm-com2:~$ `scp nkm@143.248.6.83:aaa .`
+nkm@nkm-com2:~$ `scp nkm@143.248.6.83:aaa .`  
+when moving folder, add option `-r`  
+`scp -r nkm@143.248.6.105:data/raiway_sit_down_GRU/ .`
 
 - from local to server  
 nkm@nkm-com2:~$ `scp aaa nkm@143.248.6.83`
+
