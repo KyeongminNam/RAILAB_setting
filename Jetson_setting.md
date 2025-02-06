@@ -81,5 +81,188 @@ You must see INSTALLATION COMPLETED SUCCESSFULLY
 
 ## Step 3: Mount SSD
 
-Follow: https://semotube.tistory.com/m/98
+Follow: https://semotube.tistory.com/m/98  
 
+- format ssd, make partition to ext4  
+```
+git clone https://github.com/jetsonhacks/rootOnNVMe.git 
+cd rootOnNVMe
+./copy-rootfs-ssd.sh
+./setup-service.sh
+sudo reboot
+```
+
+----
+
+## Step 4: Linux setting
+
+```
+sudo apt -y update
+sudo apt -y upgrade
+sudo apt -y autoremove
+sudo apt -y autoclean
+sudo apt -y --fix-broken install
+sudo apt-get remove --purge XXX
+```
+
+### install ros2 foxy  
+https://docs.ros.org/en/foxy/Installation.html
+
+### install vscode for arm64
+
+### git ssh setting  
+```
+ssh-keygen
+gedit ~/.ssh/id_rsa.pub
+```
+
+### install raisim & raisin
+- raisim
+```
+#mkdir ~/raisim_ws && cd ~/raisim_ws/
+git clone git@github.com:raisimTech/raisimLib.git
+cd ~/raisim_ws/raisimLib && mkdir build
+cd build
+cmake .. -DCMAKE_BUILD_TYPE=RELEASE
+#cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_SYSTEM_PROCESSOR=aarch64
+make -j16
+```
+
+- raisin
+```
+# mkdir -p ~/raisin_ws/src && cd ~/raisin_ws/src
+# clone raisin / raisin_plugin / raiway_controller
+# set proper branch
+# change CMakelists.txt of raisin_raisimlib
+```
+
+### install dependencies
+
+- realsense SDK
+```
+## Step1
+sudo mkdir -p /etc/apt/keyrings
+curl -sSf https://librealsense.intel.com/Debian/librealsense.pgp | sudo tee /etc/apt/keyrings/librealsense.pgp > /dev/null
+
+## Step2
+echo "deb [signed-by=/etc/apt/keyrings/librealsense.pgp] https://librealsense.intel.com/Debian/apt-repo `lsb_release -cs` main" | \
+sudo tee /etc/apt/sources.list.d/librealsense.list
+sudo apt-get update
+
+## Step3
+sudo apt-get install -y librealsense2-dkms librealsense2-utils 
+sudo apt-get install -y librealsense2-dev librealsense2-dbg
+```
+
+- PCL-ROS
+```
+sudo apt install ros-foxy-pcl-ros
+```
+
+- yq
+```
+sudo add-apt-repository ppa:rmescandon/yq
+sudo apt update
+sudo apt install yq -y
+```
+
+- ssh
+```
+sudo apt install openssh-server 
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+chmod og-wx ~/.ssh/authorized_keys 
+```
+
+- gui
+```
+sudo apt install python3-pip
+pip install osmnx
+pip install scikit-learn
+
+sudo apt-get install ros-foxy-compressed-image-transport
+sudo apt install ros-foxy-camera-info-manager*
+sudo apt-get install libglfw3 libglfw3-dev
+sudo apt install libompl-dev
+sudo apt install libgeographic-dev
+```
+
+- etc
+```
+sudo apt install python3-colcon-common-extensions -y
+sudo apt install git cmake minizip libeigen3-dev
+
+sudo apt install python3-rosdep -y
+sudo rosdep init
+rosdep update
+```
+```
+sudo apt install libyaml-cpp-dev -y
+sudo apt install -y libpostproc-dev libavdevice-dev libavfilter-dev
+sudo apt install g++-aarch64-linux-gnu libc6-dev -y
+sudo apt install pkg-config -y
+
+sudo apt install libopencv-dev python3-opencv -y
+sudo apt install ros-foxy-vision-opencv ros-foxy-cv-bridge -y
+sudo apt install ros-foxy-image-transport -y
+sudo apt install ros-foxy-eigen3-cmake-module -y
+sudo apt install ros-foxy-rosidl-default-generators -y
+sudo apt install ros-foxy-ament-cmake ros-foxy-ament-lint-auto 
+sudo apt install ros-foxy-ament-cmake-auto -y
+
+sudo apt install ffmpeg
+```
+
+### create_ap
+- clone
+```
+cd ~ && git clone git@github.com:oblique/create_ap.git
+cd ~/create_ap
+make install
+```
+
+- write to ~/create_ap/make_ap.py
+```
+import os
+os.system("sudo create_ap -n wlan0 'raiway' '00000000' --freq-band 2.4 --no-virt -w 2 -c 6 --ieeee8021n")
+```
+
+- write to /etc/systemd/system/raiway_create_ap.service
+```
+[Unit]
+Description=Create AP Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/raiway/create_ap/make_ap.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+- how to use
+```
+sudo systemctl enable raiway_create_ap.service
+sudo systemctl start raiway_create_ap.service
+sudo systemctl status raiway_create_ap.service
+sudo systemctl stop raiway_create_ap.service
+```
+
+### SOEM
+- clone & build
+```
+cd ~ && git clone git@github.com:OpenEtherCATsociety/SOEM.git
+cd ~/SOEM
+mkdir build
+cd build 
+cmake ..
+make
+```
+
+- how to use
+```
+cd ~/SOEM/test/linux/simple_test/
+sudo ./simple_test XXX
+```
