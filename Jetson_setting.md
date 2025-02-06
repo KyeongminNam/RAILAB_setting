@@ -208,6 +208,11 @@ sudo apt install ros-foxy-eigen3-cmake-module -y
 sudo apt install ros-foxy-rosidl-default-generators -y
 sudo apt install ros-foxy-ament-cmake ros-foxy-ament-lint-auto 
 sudo apt install ros-foxy-ament-cmake-auto -y
+sudo apt install ros-foxy-rclcpp-components -y
+sudo apt install ros-foxy-std-srvs -y
+sudo apt install ros-foxy-sdl2-vendor libsdl2-dev -y
+sudo apt install ros-foxy-ublox-msgs -y
+sudo apt install ros-foxy-compressed-image-transport -y
 
 sudo apt install ffmpeg
 ```
