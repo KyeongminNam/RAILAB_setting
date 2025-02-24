@@ -1,5 +1,5 @@
 # Jetson Setting Manual
-Last Updated : 2025.02.05
+Last Updated : 2025.02.24
 
 ----
 ## step 0: Install sdkmanager to desktop
@@ -128,13 +128,30 @@ cmake .. -DCMAKE_BUILD_TYPE=RELEASE
 make -j16
 ```
 
-- raisin
+- raisin (ros)
 ```
 # mkdir -p ~/raisin_ws/src && cd ~/raisin_ws/src
 # clone raisin / raisin_plugin / raiway_controller
 # set proper branch
 # change CMakelists.txt of raisin_raisimlib
 ```
+
+- raisin (network)
+```
+Sphinx                               4.5.0
+sphinx-panels                        0.6.0
+sphinx-rtd-theme                     1.0.0
+sphinx-tabs                          3.4.7
+sphinxcontrib-applehelp              1.0.4
+sphinxcontrib-devhelp                1.0.2
+sphinxcontrib-htmlhelp               2.0.1
+sphinxcontrib-jquery                 4.1
+sphinxcontrib-jsmath                 1.0.1
+sphinxcontrib-qthelp                 1.0.3
+sphinxcontrib-serializinghtml        1.1.5
+sphinxcontrib-youtube                1.3.0
+```
+
 
 ### install dependencies
 
@@ -228,7 +245,8 @@ make install
 - write to ~/create_ap/make_ap.py
 ```
 import os
-os.system("sudo create_ap -n wlan0 'raiway' '00000000' --freq-band 2.4 --no-virt -w 2 -c 6 --ieeee8021n")
+os.system("chmod 666 /dev/ttyACM0")
+os.system("sudo create_ap -n wlan0 'raiway' '00000000' --freq-band 2.4 --no-virt -w 2 -c 6 --ieee80211n")
 ```
 
 - write to /etc/systemd/system/raiway_create_ap.service
@@ -254,6 +272,25 @@ sudo systemctl start raiway_create_ap.service
 sudo systemctl status raiway_create_ap.service
 sudo systemctl stop raiway_create_ap.service
 ```
+### lancard setup
+1) check lancard version with `lspci` or `sudo lshw -C network`
+- For example, `0005:03:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8125 2.5GbE Controller (rev 05)`, then RTL8125 is my lancard  
+2) download driver in : https://www.realtek.com/Download/List?cate_id=584
+3) 
+```
+tar -xvf r8125-9.005.06.tar.bz2
+cd r8125-9.005.06
+sudo ./autorun.sh
+# You must see "complete"
+
+sudo reboot
+```
+
+4) check slaveinfo with SOEM
+`sudo ./slaveinfo eth0`
+
+5) change name `ethX` to `ethercat`
+
 
 ### SOEM
 - clone & build
@@ -268,6 +305,39 @@ make
 
 - how to use
 ```
-cd ~/SOEM/test/linux/simple_test/
+cd ~/SOEM/build/test/linux/simple_test/
 sudo ./simple_test XXX
+
+cd ~/SOEM/build/test/linux/slaveinfo/
+sudo ./slaveinfo XXX
+```
+
+### auto-start the raisin(network) raiway node
+In robot PC,
+`vi /etc/systemd/system/raisin_raiway_node.service`
+
+```
+[Unit]
+Description=raisin raiway node
+After=network.target
+
+[Service]
+Type=simple
+# Path to your executable or script
+ExecStart=/home/raiway/raisin_ws/install/scripts/raisin_raiway/scripts/raisin_service.sh
+# Ensure the service will be automatically restarted if it crashes
+Restart=always
+RestartSec=2
+# Run as root (You can specify a different user if necessary)
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```
+systemctl daemon-reload
+systemctl enable raisin_raibo2_node.service
+systemctl start raisin_raibo2_node.service
 ```

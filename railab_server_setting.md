@@ -3,10 +3,12 @@
 - server information
 ```
 ssh user@143.248.6.83 (password: hubo)
-ssh railab@143.248.6.101/105/168 (password: railab)
-ssh user@143.248.249.67/108/145/146 (password: raiboisKing)
+ssh railab@143.248.6.101/105 (password: railab)
+ssh user@143.248.6.168 (password: railab)
+ssh user@143.248.249.67/145/146 (password: raiboisKing)
+ssh user@143.248.249.108 (password: RaiboisKing)
 ssh user@143.248.8.10 (password: raiboisKing)
-ssh user@143.248.247.189 (password: RaiboisKing)
+ssh user@143.248.247.189 (password: raiboisKing)
 ```
 - add my account `nkm`
 
@@ -85,6 +87,7 @@ nkm@user-TRX40-DESIGNARE:~$ `docker cp nkm:/root/aaa .`
 
 - from server to docker  
 nkm@user-TRX40-DESIGNARE:~$ `docker cp aaa nkm:/root`  
+`docker cp 2025-02-13-11-48-37/ nkm:/root/../raisim_ws/raisimGymForSegway/raisimGymForSegway/data/transfer`
 
 - from server to local  
 nkm@nkm-com2:~$ `scp nkm@143.248.6.83:aaa .`  
@@ -93,4 +96,6 @@ when moving folder, add option `-r`
 
 - from local to server  
 nkm@nkm-com2:~$ `scp aaa nkm@143.248.6.83`
+`scp -r /home/nkm/raisim_ws/raisimGymForSegway/raisimGymForSegway/data/raiway_sit_down_GRU_4/2025-02-13-11-48-37/ nkm@143.248.6.105:~/  `
+`scp -r raisimGymForSegway/data/raiway_sit_down_GRU_4/2025-02-24-11-46-04/ nkm@143.248.6.101:data_transfer/`
 
